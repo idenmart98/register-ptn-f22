@@ -18,4 +18,5 @@ class User(AbstractUser):
     
 class ConfirmLink(models.Model):
     uid = models.CharField(max_length=50)
+    confirmed = models.BooleanField(default=False)
     user = models.ForeignKey(User,on_delete=models.CASCADE)

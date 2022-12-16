@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        'DIRS': [BASE_DIR / "templates"],
     },
 ]
 
@@ -132,3 +133,5 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'ekulubayev@mail.ru'
 EMAIL_HOST_PASSWORD = '2KKajxQq2tcB0UWe1yVQ'
 SITE_LINK = 'http://localhost:8000/'
+LOGIN_REDIRECT_URL = "/profile/office/"
+LOGOUT_REDIRECT_URL = "/profile/office/" 
