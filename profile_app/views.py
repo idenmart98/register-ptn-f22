@@ -42,7 +42,6 @@ def confirmation(request, uid):
 
 def private_office(request):
     message = 'Welcome your private office'
-    print(request.user)
     if request.user.is_authenticated:
         return render(request, 'office.html', {'message': message})
     message = 'Please login'

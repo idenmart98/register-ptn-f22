@@ -8,5 +8,4 @@ def send_registration_email(email,message):
         message = message,
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=[email,] 
-    )
-    print(a)
+     )
