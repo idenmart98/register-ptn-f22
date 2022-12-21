@@ -1,22 +1,20 @@
 from django.shortcuts import render
 from .serializers import NoteSerializer, CategorySerializer
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .models import Category
+from .models import Category, Note
 
-# Create your views here.
 
-class CategoryListView(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
-    serialazer_class = CategorySerializer
+class CategoryListView(ListAPIView):
+    serializer_class = CategorySerializer
     queryset = Category.objects.all()
-
-    def get(self, request, format=None):
-        content = {
-            'user': str(request.user),
-            'auth': str(request.auth), 
-        }
-        return Response(content)
+    
+class NoteListView(ListAPIView):
+    serializer_class = NoteSerializer
+    queryset = Note.objects.all()
+    
+    def get_queryset(self):
+        return Note.objects.filter(user=self.request.user)
