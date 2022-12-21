@@ -15,6 +15,8 @@ class CategoryListView(APIView):
     queryset = Category.objects.all()
 
     def get(self, request, format=None):
-        queryset = Category.objects.all()
-        data = CategorySerializer(data=queryset, many=True)        
-        return Response(data=data)
+        content = {
+            'user': str(request.user),
+            'auth': str(request.auth), 
+        }
+        return Response(content)
