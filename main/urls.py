@@ -20,7 +20,9 @@ from profile_app.views import main
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path("accounts/", include("django.contrib.auth.urls")),
     path("", main, name="main"),
-    path('profile/', include('profile_app.urls'))
+    path('profile/', include('profile_app.urls')),
+    path('accountant/', include('accountant.urls'))
 ]
