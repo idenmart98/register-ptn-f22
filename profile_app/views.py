@@ -35,6 +35,31 @@ def login(request):
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},
                     status=HTTP_200_OK)
+    
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def api_registration(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    if username is None or password is None:
+        return Response({'error': 'Please provide both username and password'},
+                        status=HTTP_400_BAD_REQUEST)
+    form = UserLoginRegistrationForm(data={'email': username,
+                                      'password': password})
+    profile = form.save(commit=False)
+    password = make_password(profile.password)
+    profile.password = password
+    profile.is_active = False   
+    uid =  uuid.uuid4().hex
+    url = f'{settings.SITE_LINK}profile/confirm/{uid}'
+    profile.save() 
+    ConfirmLink.objects.create(uid=uid, user=profile)
+    send_registration_email(profile.email, url)
+    message = 'check your mail'
+    return Response({'message': message},
+                    status=HTTP_200_OK)
+
 
 def registration(request):
     form = UserLoginRegistrationForm(request.POST or None)
@@ -43,7 +68,7 @@ def registration(request):
         profile = form.save(commit=False)
         password = make_password(profile.password)
         profile.password = password
-        profile.is_active=False   
+        profile.is_active = False   
         uid =  uuid.uuid4().hex
         url = f'{settings.SITE_LINK}profile/confirm/{uid}'
         profile.save()
