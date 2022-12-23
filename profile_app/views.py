@@ -77,7 +77,7 @@ def registration(request):
         send_registration_email(profile.email,url)
         message = 'check your mail'
         
-    return render(request,'register.html',{'form': form, 'message': message})
+    return render(request, 'register.html', {'form': form, 'message': message})
 
 
 def confirmation(request, uid):
