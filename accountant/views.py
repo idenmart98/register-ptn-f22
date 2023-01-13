@@ -1,11 +1,7 @@
-from django.shortcuts import render
-from .serializers import NoteSerializer, CategorySerializer
-from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, CreateAPIView
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
+
 from .models import Category, Note
+from .serializers import NoteSerializer, CategorySerializer
 
 
 class CategoryListView(ListAPIView):
